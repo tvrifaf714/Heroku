@@ -40,4 +40,4 @@ _externals
 docker build -t paidnw .
 
 # Run Docker container from the built image
-docker run paidnw
+docker run -d -p 8080:80 paidnw
