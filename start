@@ -3,22 +3,41 @@
 _other_installs () {
    if [[ $OTHER_INSTALLS != "None" ]]
    then
-    apt install $OTHER_INSTALLS -y
+      apt install $OTHER_INSTALLS -y
    fi
-   }
+}
+
 _externals () {
    if [[ $OTHER_CMD != "None" ]]
    then
       $OTHER_CMD
    fi
-   }
-    
+}
+
+# Update and upgrade system packages
 apt update && apt upgrade -y
+
+# Install Git
 apt install git -y
+
+# Install additional packages if specified
 _other_installs
+
+# Upgrade pip
 pip3 install -U pip
+
+# Clone the Git repository
 git clone $REPO_URL Github_Repo
 cd Github_Repo
+
+# Install Python dependencies
 pip3 install -U -r requirements.txt
+
+# Execute additional commands if specified
 _externals
-python3 $PYTHON_FILE
+
+# Build Docker image from Dockerfile
+docker build -t paidnw .
+
+# Run Docker container from the built image
+docker run paidnw
